@@ -1,5 +1,6 @@
 plugins {
-    kotlin("jvm") version "2.1.10"
+    alias(libs.plugins.kotlin.jvm)
+    `java-test-fixtures`
 }
 
 group = "io.vending.machine"
@@ -12,12 +13,20 @@ allprojects {
 }
 
 subprojects {
-    apply(plugin = "kotlin")
+    apply(
+        plugin =
+            rootProject.libs.plugins.kotlin.jvm
+                .get()
+                .pluginId,
+    )
+    apply(plugin = "java-test-fixtures")
 
     dependencies {
-        implementation("io.insert-koin:koin-core:4.0.2")
+        implementation(rootProject.libs.koin)
+        implementation(rootProject.libs.bundles.language)
+        implementation(rootProject.libs.bundles.arrow.kt)
 
-        testImplementation(kotlin("test"))
+        testImplementation(rootProject.libs.bundles.test)
     }
 }
 
