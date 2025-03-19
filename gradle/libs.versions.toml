@@ -23,6 +23,8 @@ reactor-test = { group = "io.projectreactor", name = "reactor-test", version.ref
 arrow-core = { group = "io.arrow-kt", name = "arrow-core", version.ref = "arrow-kt" }
 arrow-fx-coroutines = { group = "io.arrow-kt", name = "arrow-fx-coroutines", version.ref = "arrow-kt" }
 koin = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin" }
+koin-test-junit5 = { group = "io.insert-koin", name = "koin-test-junit5", version.ref = "koin" }
 kotest = { group = "io.kotest", name = "kotest-runner-junit5-jvm", version.ref = "kotest" }
 kotest-assertion = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotest" }
 kotest-arrow-kt = { group = "io.kotest.extensions", name = "kotest-assertions-arrow", version.ref = "kotest-arrow-kt" }
@@ -31,4 +33,4 @@ kotest-koin = { group = "io.kotest.extensions", name = "kotest-extensions-koin",
 [bundles]
 language = ["kotlin-reflect", "kotlinx-coroutines", "jackson-module-kotlin", "reactor-kotlin-extensions"]
 arrow-kt = ["arrow-core", "arrow-fx-coroutines"]
-test = ["kotest", "kotest-assertion", "kotest-arrow-kt", "kotest-koin", "kotlin-coroutines-test", "reactor-test"]
+test = ["kotest", "kotest-assertion", "kotest-arrow-kt", "kotest-koin", "kotlin-coroutines-test", "reactor-test", "koin-test-junit5", "koin-test"]
