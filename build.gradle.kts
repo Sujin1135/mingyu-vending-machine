@@ -1,5 +1,3 @@
-import java.util.regex.Pattern.compile
-
 plugins {
     kotlin("jvm") version "2.1.10"
 }
@@ -7,19 +5,30 @@ plugins {
 group = "io.vending.machine"
 version = "1.0-SNAPSHOT"
 
-repositories {
-    mavenCentral()
+allprojects {
+    repositories {
+        mavenCentral()
+    }
 }
 
-dependencies {
-    implementation("io.insert-koin:koin-core:4.0.2")
+subprojects {
+    apply(plugin = "kotlin")
 
-    testImplementation(kotlin("test"))
+    dependencies {
+        implementation("io.insert-koin:koin-core:4.0.2")
+
+        testImplementation(kotlin("test"))
+    }
+}
+
+kotlin {
+    jvmToolchain(21)
 }
 
 tasks.test {
     useJUnitPlatform()
 }
-kotlin {
-    jvmToolchain(21)
+
+tasks.getByName<Jar>("jar") {
+    enabled = true
 }
