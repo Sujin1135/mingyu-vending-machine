@@ -27,6 +27,9 @@ subprojects {
         implementation(rootProject.libs.bundles.arrow.kt)
 
         testImplementation(rootProject.libs.bundles.test)
+
+        testFixturesImplementation(rootProject.libs.fixture.monkey)
+        testFixturesImplementation(rootProject.libs.jqwik)
     }
 }
 

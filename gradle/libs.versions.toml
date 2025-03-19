@@ -29,6 +29,8 @@ kotest = { group = "io.kotest", name = "kotest-runner-junit5-jvm", version.ref =
 kotest-assertion = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotest" }
 kotest-arrow-kt = { group = "io.kotest.extensions", name = "kotest-assertions-arrow", version.ref = "kotest-arrow-kt" }
 kotest-koin = { group = "io.kotest.extensions", name = "kotest-extensions-koin", version.ref = "kotest-koin" }
+fixture-monkey = { group = "com.navercorp.fixturemonkey", name = "fixture-monkey-starter-kotlin", version = "1.1.10" }
+jqwik = { module = "net.jqwik:jqwik-kotlin", version = "1.9.2" }
 
 [bundles]
 language = ["kotlin-reflect", "kotlinx-coroutines", "jackson-module-kotlin", "reactor-kotlin-extensions"]
