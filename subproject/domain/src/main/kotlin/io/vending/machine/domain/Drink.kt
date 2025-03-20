@@ -46,8 +46,13 @@ data class Drink(
     value class Amount(
         val value: Int,
     ) {
-        operator fun plus(amount: Amount): Amount = Amount(value + amount.value)
+        operator fun minus(quantity: Int): Amount = Amount(value - quantity)
     }
 
-    fun addAmount(amount: Amount) = this.copy(amount = this.amount + amount)
+    val sufficientQuantity: Boolean
+        get() = amount.value > 0
+
+    fun buy() = this.copy(amount = this.amount - 1)
+
+    fun checkAvailableBuy(coin: Int) = coin - this.price.value >= 0
 }

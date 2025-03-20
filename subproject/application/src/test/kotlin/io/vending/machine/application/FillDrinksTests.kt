@@ -6,10 +6,12 @@ import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
-import io.vending.machine.config.appModule
 import io.vending.machine.domain.Drink
 import io.vending.machine.domain.DrinkGenerator
+import io.vending.machine.repository.DrinkRepository
+import io.vending.machine.repository.DrinkRepositoryImpl
 import org.koin.core.context.startKoin
+import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
@@ -17,7 +19,14 @@ class FillDrinksTests :
     FreeSpec(),
     KoinTest {
     init {
-        startKoin { modules(appModule) }
+        startKoin {
+            modules(
+                module {
+                    single<DrinkRepository> { DrinkRepositoryImpl() }
+                    single<FillDrinks> { FillDrinks(drinkRepository = get()) }
+                },
+            )
+        }
 
         val fillDrinks by inject<FillDrinks>()
 
