@@ -47,7 +47,7 @@ class FillDrinksTests :
         }
 
         "should raise an error cause input contained a invalid drink data as amount" - {
-            val invalidDrink = DrinkGenerator.generate().copy(amount = Drink.Amount(-5))
+            val invalidDrink = DrinkGenerator.generate().copy(quantity = Drink.Quantity(-5))
             val drinks = listOf(DrinkGenerator.generate(), invalidDrink)
             fillDrinks(drinks)
                 .toEither()

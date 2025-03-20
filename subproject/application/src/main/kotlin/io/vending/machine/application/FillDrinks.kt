@@ -25,7 +25,7 @@ class FillDrinks(
     private fun validate(drinks: List<Drink>): Effect<Failure, Unit> =
         effect {
             drinks.forEach {
-                ensure(it.amount.value > 0) {
+                ensure(it.quantity.value > 0) {
                     raise(Failure.InvalidDrinkContained(message = "the drink(${it.name}) amount can not be negative"))
                 }
 

@@ -7,7 +7,7 @@ data class Drink(
     override val id: Base.Id,
     val name: Name,
     val price: Price,
-    val amount: Amount,
+    val quantity: Quantity,
     override val created: Base.CreatedAt,
     override val modified: Base.ModifiedAt,
     override val deleted: Base.DeletedAt?,
@@ -16,7 +16,7 @@ data class Drink(
         fun of(
             name: Name,
             price: Price,
-            amount: Amount,
+            quantity: Quantity,
         ): Drink {
             val now = OffsetDateTime.now()
 
@@ -24,7 +24,7 @@ data class Drink(
                 id = Base.Id(UUID.randomUUID()),
                 name = name,
                 price = price,
-                amount = amount,
+                quantity = quantity,
                 created = Base.CreatedAt(value = now),
                 modified = Base.ModifiedAt(value = now),
                 deleted = null,
@@ -43,16 +43,16 @@ data class Drink(
     )
 
     @JvmInline
-    value class Amount(
+    value class Quantity(
         val value: Int,
     ) {
-        operator fun minus(quantity: Int): Amount = Amount(value - quantity)
+        operator fun minus(quantity: Int): Quantity = Quantity(value - quantity)
     }
 
     val sufficientQuantity: Boolean
-        get() = amount.value > 0
+        get() = quantity.value > 0
 
-    fun buy() = this.copy(amount = this.amount - 1)
+    fun buy() = this.copy(quantity = this.quantity - 1)
 
     fun checkAvailableBuy(coin: Int) = coin - this.price.value >= 0
 }

@@ -38,7 +38,7 @@ class BuyDrinkTests :
         val buyDrink by inject<BuyDrink>()
         val fillDrinks by inject<FillDrinks>()
 
-        val drink = DrinkGenerator.generate().copy(amount = Drink.Amount(500))
+        val drink = DrinkGenerator.generate().copy(quantity = Drink.Quantity(500))
 
         beforeTest {
             fillDrinks(listOf(drink)).getOrNull()
@@ -64,7 +64,7 @@ class BuyDrinkTests :
         }
 
         "should return left value cause insufficient quantity" - {
-            val initData = DrinkGenerator.generate().copy(amount = Drink.Amount(1))
+            val initData = DrinkGenerator.generate().copy(quantity = Drink.Quantity(1))
             fillDrinks(listOf(initData)).toEither().shouldBeRight()
 
             buyDrink(initData.id, initData.price.value).toEither().shouldBeRight()

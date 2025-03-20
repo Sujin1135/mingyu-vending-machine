@@ -49,7 +49,7 @@ class BuyDrinkWithCreditCardTests :
         val fillDrinks by inject<FillDrinks>()
         val buyDrinkWithCreditCard by inject<BuyDrinkWithCreditCard>()
 
-        val drink = DrinkGenerator.generate().copy(amount = Drink.Amount(500))
+        val drink = DrinkGenerator.generate().copy(quantity = Drink.Quantity(500))
         val creditCard = CreditCardGenerator.generate()
 
         beforeTest {
@@ -72,7 +72,7 @@ class BuyDrinkWithCreditCardTests :
         }
 
         "should raise the failure cause insufficient quantity of the drink" - {
-            val oneDrink = DrinkGenerator.generate().copy(amount = Drink.Amount(1))
+            val oneDrink = DrinkGenerator.generate().copy(quantity = Drink.Quantity(1))
 
             fillDrinks(listOf(oneDrink)).toEither().shouldBeRight()
 

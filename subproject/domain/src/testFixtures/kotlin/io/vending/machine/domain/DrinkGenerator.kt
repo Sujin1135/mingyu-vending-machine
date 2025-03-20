@@ -31,8 +31,8 @@ object DrinkGenerator {
                     Arbitraries.integers().between(500, 3000).sample(),
                 ),
             ).set(
-                "amount",
-                Drink.Amount(
+                "quantity",
+                Drink.Quantity(
                     Arbitraries.integers().between(1, 50).sample(),
                 ),
             ).build()
