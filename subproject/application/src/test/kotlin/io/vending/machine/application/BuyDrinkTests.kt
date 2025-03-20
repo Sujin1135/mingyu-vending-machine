@@ -5,6 +5,7 @@ import arrow.core.raise.toEither
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.core.spec.style.FreeSpec
+import io.kotest.core.spec.style.Test
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 import io.vending.machine.domain.Base
@@ -18,6 +19,7 @@ import org.koin.test.KoinTest
 import org.koin.test.inject
 import java.util.UUID
 
+@Test
 class BuyDrinkTests :
     FreeSpec(),
     KoinTest {
@@ -27,7 +29,8 @@ class BuyDrinkTests :
                 module {
                     single<DrinkRepository> { DrinkRepositoryImpl() }
                     single<FillDrinks> { FillDrinks(drinkRepository = get()) }
-                    single<BuyDrink> { BuyDrink(drinkRepository = get()) }
+                    single<ValidateBuyingAvailable> { ValidateBuyingAvailable(drinkRepository = get()) }
+                    single<BuyDrink> { BuyDrink(drinkRepository = get(), validateBuyingAvailable = get()) }
                 },
             )
         }
@@ -57,7 +60,7 @@ class BuyDrinkTests :
         }
 
         "should return left value cause insufficient coin" - {
-            buyDrink(drink.id, drink.price.value).toEither().shouldBeLeft().shouldBeTypeOf<BuyDrink.Failure.InsufficientCoin>()
+            buyDrink(drink.id, drink.price.value - 100).toEither().shouldBeLeft().shouldBeTypeOf<BuyDrink.Failure.InsufficientCoin>()
         }
 
         "should return left value cause insufficient quantity" - {

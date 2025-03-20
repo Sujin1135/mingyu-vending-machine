@@ -9,6 +9,7 @@ kotest-koin = "1.3.0"
 reactor-test = "3.6.1"
 reactor-kotlin = "1.2.3"
 jackson-module = "2.18.2"
+mockk = "1.13.17"
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
@@ -25,14 +26,15 @@ arrow-fx-coroutines = { group = "io.arrow-kt", name = "arrow-fx-coroutines", ver
 koin = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
 koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin" }
 koin-test-junit5 = { group = "io.insert-koin", name = "koin-test-junit5", version.ref = "koin" }
-kotest = { group = "io.kotest", name = "kotest-runner-junit5-jvm", version.ref = "kotest" }
+kotest = { group = "io.kotest", name = "kotest-runner-junit5", version.ref = "kotest" }
 kotest-assertion = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotest" }
 kotest-arrow-kt = { group = "io.kotest.extensions", name = "kotest-assertions-arrow", version.ref = "kotest-arrow-kt" }
 kotest-koin = { group = "io.kotest.extensions", name = "kotest-extensions-koin", version.ref = "kotest-koin" }
 fixture-monkey = { group = "com.navercorp.fixturemonkey", name = "fixture-monkey-starter-kotlin", version = "1.1.10" }
 jqwik = { module = "net.jqwik:jqwik-kotlin", version = "1.9.2" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 
 [bundles]
 language = ["kotlin-reflect", "kotlinx-coroutines", "jackson-module-kotlin", "reactor-kotlin-extensions"]
 arrow-kt = ["arrow-core", "arrow-fx-coroutines"]
-test = ["kotest", "kotest-assertion", "kotest-arrow-kt", "kotest-koin", "kotlin-coroutines-test", "reactor-test", "koin-test-junit5", "koin-test"]
+test = ["kotest", "kotest-assertion", "kotest-arrow-kt", "kotest-koin", "kotlin-coroutines-test", "reactor-test", "koin-test-junit5", "koin-test", "mockk"]
