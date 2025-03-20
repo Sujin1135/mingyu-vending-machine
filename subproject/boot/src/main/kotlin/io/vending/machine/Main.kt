@@ -5,7 +5,7 @@ import arrow.core.raise.effect
 import arrow.core.raise.fold
 import arrow.core.raise.get
 import arrow.core.raise.mapError
-import io.vending.machine.application.BuyDrink
+import io.vending.machine.application.BuyDrinkWithCoin
 import io.vending.machine.application.BuyDrinkWithCreditCard
 import io.vending.machine.application.FillDrinks
 import io.vending.machine.config.appModule
@@ -180,7 +180,7 @@ private fun buy(): Effect<Nothing, Unit> =
         if (insertedCreditCard == null && totalInsertedCoins <= 0) {
             println("카드나 현금을 넣어주세요.")
         } else {
-            val buyDrink = get<BuyDrink>(BuyDrink::class.java)
+            val buyDrinkWithCoin = get<BuyDrinkWithCoin>(BuyDrinkWithCoin::class.java)
             val buyDrinkWithCreditCard = get<BuyDrinkWithCreditCard>(BuyDrinkWithCreditCard::class.java)
 
             println("-----구매가능 목록-----")
@@ -211,12 +211,12 @@ private fun buy(): Effect<Nothing, Unit> =
                         },
                     )
                 } else {
-                    buyDrink(drinkId, totalInsertedCoins).fold(
+                    buyDrinkWithCoin(drinkId, totalInsertedCoins).fold(
                         recover = {
                             when (it) {
-                                BuyDrink.Failure.NotFound -> println("해당 제품은 존재하지 않습니다.")
-                                BuyDrink.Failure.InsufficientQuantity -> println("수량이 부족합니다.")
-                                BuyDrink.Failure.InsufficientCoin -> println("투입금액이 부족합니다.")
+                                BuyDrinkWithCoin.Failure.NotFound -> println("해당 제품은 존재하지 않습니다.")
+                                BuyDrinkWithCoin.Failure.InsufficientQuantity -> println("수량이 부족합니다.")
+                                BuyDrinkWithCoin.Failure.InsufficientCoin -> println("투입금액이 부족합니다.")
                             }
                         },
                         transform = {

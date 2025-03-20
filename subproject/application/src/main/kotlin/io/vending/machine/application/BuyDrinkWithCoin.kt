@@ -7,7 +7,7 @@ import arrow.core.raise.mapError
 import io.vending.machine.domain.Base
 import io.vending.machine.repository.DrinkRepository
 
-class BuyDrink(
+class BuyDrinkWithCoin(
     private val drinkRepository: DrinkRepository,
     private val validateBuyingAvailable: ValidateBuyingAvailable,
 ) {

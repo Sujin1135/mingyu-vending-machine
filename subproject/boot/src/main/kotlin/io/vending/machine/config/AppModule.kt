@@ -1,6 +1,6 @@
 package io.vending.machine.config
 
-import io.vending.machine.application.BuyDrink
+import io.vending.machine.application.BuyDrinkWithCoin
 import io.vending.machine.application.BuyDrinkWithCreditCard
 import io.vending.machine.application.FillDrinks
 import io.vending.machine.application.ValidateBuyingAvailable
@@ -16,7 +16,7 @@ val appModule =
         single<FillDrinks> { FillDrinks(drinkRepository = get()) }
         single<ValidateBuyingAvailable> { ValidateBuyingAvailable(drinkRepository = get()) }
         single<CreditCardApi> { CreditCardApiImpl() }
-        single<BuyDrink> { BuyDrink(drinkRepository = get(), validateBuyingAvailable = get()) }
+        single<BuyDrinkWithCoin> { BuyDrinkWithCoin(drinkRepository = get(), validateBuyingAvailable = get()) }
         single<BuyDrinkWithCreditCard> {
             BuyDrinkWithCreditCard(
                 drinkRepository = get(),

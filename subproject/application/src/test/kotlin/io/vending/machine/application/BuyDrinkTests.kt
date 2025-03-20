@@ -30,12 +30,12 @@ class BuyDrinkTests :
                     single<DrinkRepository> { DrinkRepositoryImpl() }
                     single<FillDrinks> { FillDrinks(drinkRepository = get()) }
                     single<ValidateBuyingAvailable> { ValidateBuyingAvailable(drinkRepository = get()) }
-                    single<BuyDrink> { BuyDrink(drinkRepository = get(), validateBuyingAvailable = get()) }
+                    single<BuyDrinkWithCoin> { BuyDrinkWithCoin(drinkRepository = get(), validateBuyingAvailable = get()) }
                 },
             )
         }
 
-        val buyDrink by inject<BuyDrink>()
+        val buyDrinkWithCoin by inject<BuyDrinkWithCoin>()
         val fillDrinks by inject<FillDrinks>()
 
         val drink = DrinkGenerator.generate().copy(quantity = Drink.Quantity(500))
@@ -45,30 +45,36 @@ class BuyDrinkTests :
         }
 
         "should return change 0 coin when insert coins exact drink price" - {
-            val sut = buyDrink(drink.id, drink.price.value).toEither().shouldBeRight()
+            val sut = buyDrinkWithCoin(drink.id, drink.price.value).toEither().shouldBeRight()
             sut shouldBe 0
         }
 
         "should return change coins when insert more coins than drink price" - {
             val coin = drink.price.value + 1000
-            val sut = buyDrink(drink.id, coin).toEither().shouldBeRight()
+            val sut = buyDrinkWithCoin(drink.id, coin).toEither().shouldBeRight()
             sut shouldBe coin - drink.price.value
         }
 
         "should return left value cause not found data" - {
-            buyDrink(Base.Id(UUID.randomUUID()), 1000).toEither().shouldBeLeft().shouldBeTypeOf<BuyDrink.Failure.NotFound>()
+            buyDrinkWithCoin(Base.Id(UUID.randomUUID()), 1000).toEither().shouldBeLeft().shouldBeTypeOf<BuyDrinkWithCoin.Failure.NotFound>()
         }
 
         "should return left value cause insufficient coin" - {
-            buyDrink(drink.id, drink.price.value - 100).toEither().shouldBeLeft().shouldBeTypeOf<BuyDrink.Failure.InsufficientCoin>()
+            buyDrinkWithCoin(
+                drink.id,
+                drink.price.value - 100,
+            ).toEither().shouldBeLeft().shouldBeTypeOf<BuyDrinkWithCoin.Failure.InsufficientCoin>()
         }
 
         "should return left value cause insufficient quantity" - {
             val initData = DrinkGenerator.generate().copy(quantity = Drink.Quantity(1))
             fillDrinks(listOf(initData)).toEither().shouldBeRight()
 
-            buyDrink(initData.id, initData.price.value).toEither().shouldBeRight()
-            buyDrink(initData.id, initData.price.value).toEither().shouldBeLeft().shouldBeTypeOf<BuyDrink.Failure.InsufficientQuantity>()
+            buyDrinkWithCoin(initData.id, initData.price.value).toEither().shouldBeRight()
+            buyDrinkWithCoin(
+                initData.id,
+                initData.price.value,
+            ).toEither().shouldBeLeft().shouldBeTypeOf<BuyDrinkWithCoin.Failure.InsufficientQuantity>()
         }
     }
 }
